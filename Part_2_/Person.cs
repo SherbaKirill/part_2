@@ -7,17 +7,17 @@ namespace Part_2
     // TODO: validate an email, email validation: check for NULL or Empty and contains string = "@". OnFail - thrown an ArgumentException.
     // TODO: override Equals and  GetHashCode
 
-    public class Person:IPerson
+    public class Person : IPerson
     {
         private string email;
         public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email {
-            get=>email;
+            get => email;
             set
             {
-                if (string.IsNullOrEmpty(value) | !value.Contains("@")) throw new System.ArgumentException();
+                if (string.IsNullOrEmpty(value) || !value.Contains("@")) throw new System.ArgumentException();
                 email = value;
             }
         }
@@ -28,40 +28,32 @@ namespace Part_2
             if (other == null) return 1;
             else 
             {
-                int returnCode = 0;// не знал как лучше назвать
-                returnCode = this.Id.CompareTo(other.Id);
-                if (returnCode != 0) return returnCode;
-                returnCode = this.GetFullName().CompareTo(other.GetFullName());
-                if (returnCode != 0) return returnCode;
-                returnCode = this.Email.CompareTo(other.Email);
-                if (returnCode != 0) return returnCode;
-                returnCode = this.Gender.CompareTo(other.Gender);
-                return returnCode;
+                int compareResult = 0;
+                compareResult = this.Id.CompareTo(other.Id);
+                if (compareResult != 0) return compareResult;
+                compareResult = this.GetFullName().CompareTo(other.GetFullName());
+                if (compareResult != 0) return compareResult;
+                compareResult = this.Email.CompareTo(other.Email);
+                if (compareResult != 0) return compareResult;
+                compareResult = this.Gender.CompareTo(other.Gender);
+                return compareResult;
             }
 
         }
 
         public int CompareTo(object obj) => obj == null ? 1 : CompareTo(obj as IPerson);
 
-        public string GetFullName() => FirstName + LastName;
-        public override bool Equals(object obj)
-        {
-            if (!(obj is IPerson person)) return false;
-            if (Id != person.Id) return false;
-            if (GetFullName() != person.GetFullName()) return false;
-            if (!email.Equals(person.Email)) return false;
-            if (Gender != person.Gender) return false;
-            return true;
-        }
+        public string GetFullName() => FirstName + " " + LastName;
+        public override bool Equals(object obj) => obj is IPerson person && Id == person.Id && GetFullName() == person.GetFullName() && email.Equals(person.Email) && Gender == person.Gender;
         public override int GetHashCode()
         {
-            int returncode = 0;
-            returncode = Id.GetHashCode();
-            returncode += FirstName.GetHashCode();
-            returncode += LastName.GetHashCode();
-            returncode += Email.GetHashCode();
-            returncode += Gender.GetHashCode();
-            return returncode;
+            int compareResult = 13;
+            compareResult = compareResult * 13 + Id.GetHashCode();
+            compareResult = compareResult * 13 + FirstName?.GetHashCode() ?? 0;
+            compareResult = compareResult * 13 + LastName?.GetHashCode() ?? 0;
+            compareResult = compareResult * 13 + Email?.GetHashCode() ?? 0;
+            compareResult = compareResult * 13 + Gender.GetHashCode();
+            return compareResult;
         }
 
     }
