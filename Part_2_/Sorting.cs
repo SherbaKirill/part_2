@@ -16,6 +16,8 @@ namespace Part_2
         {
             // NOTE: do not use LINQ
             // TODO: implement here
+            Array.Sort(collection);
+            return collection;
             throw new NotImplementedException();
         }
 
@@ -31,6 +33,9 @@ namespace Part_2
         {
             // NOTE: do not use LINQ
             // TODO: implement here
+            Array.Sort(collection);
+            Array.Reverse(collection);
+            return collection;
             throw new NotImplementedException();
         }
 
@@ -45,6 +50,14 @@ namespace Part_2
         {
             // NOTE: do not use LINQ
             // TODO: implement here
+            T[] result = new T[0];
+            foreach (T element in collection)
+                if (Array.IndexOf(result, element) == -1)
+                {
+                    Array.Resize(ref result, result.Length + 1);
+                    result.SetValue(element, result.Length - 1);                    
+                }
+            return result;
             throw new NotImplementedException();
         }
     }
