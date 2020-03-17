@@ -18,7 +18,6 @@ namespace Part_2
             // TODO: implement here
             Array.Sort(collection);
             return collection;
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -36,7 +35,6 @@ namespace Part_2
             Array.Sort(collection);
             Array.Reverse(collection);
             return collection;
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -58,7 +56,6 @@ namespace Part_2
                     result.SetValue(element, result.Length - 1);                    
                 }
             return result;
-            throw new NotImplementedException();
         }
     }
 }
