@@ -1,24 +1,19 @@
 ﻿
 namespace Part_2
 {
-    // TODO: inherit IPerson interface
-    // TODO: create Person class with public parameters Id (long), FirstName (string), LastName (string), Email (string), Gender (Enum).
-    // TODO: add method to get full name()
-    // TODO: validate an email, email validation: check for NULL or Empty and contains string = "@". OnFail - thrown an ArgumentException.
-    // TODO: override Equals and  GetHashCode
-
     public class Person : IPerson
     {
-        private string email;
+        private string _email;
         public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email {
-            get => email;
+            get => _email;
             set
             {
-                if (string.IsNullOrEmpty(value) || !value.Contains("@")) throw new System.ArgumentException();
-                email = value;
+                if (string.IsNullOrEmpty(value) || !value.Contains("@"))
+                    throw new System.ArgumentException();
+                _email = value;
             }
         }
         public Gender Gender { get; set; }
@@ -31,9 +26,11 @@ namespace Part_2
                 int compareResult = 0;
                 compareResult = this.Id.CompareTo(other.Id);
                 if (compareResult != 0) return compareResult;
-                compareResult = this.GetFullName().CompareTo(other.GetFullName());
+                compareResult = string.Compare(this.FirstName, other.FirstName);
                 if (compareResult != 0) return compareResult;
-                compareResult = this.Email.CompareTo(other.Email);
+                compareResult = string.Compare(this.LastName,other.LastName);
+                if (compareResult != 0) return compareResult;
+                compareResult = string.Compare(this.Email,other.Email);
                 if (compareResult != 0) return compareResult;
                 compareResult = this.Gender.CompareTo(other.Gender);
                 return compareResult;
@@ -44,16 +41,18 @@ namespace Part_2
         public int CompareTo(object obj) => obj == null ? 1 : CompareTo(obj as IPerson);
 
         public string GetFullName() => FirstName + " " + LastName;
-        public override bool Equals(object obj) => obj is IPerson person && Id == person.Id && GetFullName() == person.GetFullName() && email.Equals(person.Email) && Gender == person.Gender;
+        public override bool Equals(object obj) => obj is IPerson person && Id == person.Id &&
+             FirstName.Equals(person.FirstName) && LastName.Equals(person.LastName) && 
+             Email.Equals(person.Email) && Gender == person.Gender;
         public override int GetHashCode()
         {
-            int compareResult = 13;
-            compareResult = compareResult * 13 + Id.GetHashCode();
-            compareResult = compareResult * 13 + FirstName?.GetHashCode() ?? 0;
-            compareResult = compareResult * 13 + LastName?.GetHashCode() ?? 0;
-            compareResult = compareResult * 13 + Email?.GetHashCode() ?? 0;
-            compareResult = compareResult * 13 + Gender.GetHashCode();
-            return compareResult;
+            int hashCode = 13;
+            hashCode = hashCode * 13 + Id.GetHashCode();
+            hashCode = hashCode * 13 + FirstName?.GetHashCode() ?? 0;
+            hashCode = hashCode * 13 + LastName?.GetHashCode() ?? 0;
+            hashCode = hashCode * 13 + Email?.GetHashCode() ?? 0;
+            hashCode = hashCode * 13 + Gender.GetHashCode();
+            return hashCode;
         }
 
     }

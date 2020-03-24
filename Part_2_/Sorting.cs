@@ -31,6 +31,7 @@ namespace Part_2
             Array.Reverse(collection);
             return collection;
         }
+
         /// <summary>
         /// Find unique collection elements.
         /// Example: [3, 1, 1, 4, 3, 3, 1, 4] => [3, 1, 4] 
@@ -45,7 +46,8 @@ namespace Part_2
                 if (Array.IndexOf(result, element) == -1)
                 {
                     Array.Resize(ref result, result.Length + 1);
-                    result.SetValue(element, result.Length - 1);                    
+
+                    result.SetValue(element, result.Length - 1);
                 }
             return result;
         }
