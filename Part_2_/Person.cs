@@ -26,11 +26,11 @@ namespace Part_2
                 int compareResult = 0;
                 compareResult = this.Id.CompareTo(other.Id);
                 if (compareResult != 0) return compareResult;
-                compareResult = this.FirstName.CompareTo(other.FirstName);
+                compareResult = string.Compare(this.FirstName, other.FirstName);
                 if (compareResult != 0) return compareResult;
-                compareResult = this.LastName.CompareTo(other.LastName);
+                compareResult = string.Compare(this.LastName,other.LastName);
                 if (compareResult != 0) return compareResult;
-                compareResult = this.Email.CompareTo(other.Email);
+                compareResult = string.Compare(this.Email,other.Email);
                 if (compareResult != 0) return compareResult;
                 compareResult = this.Gender.CompareTo(other.Gender);
                 return compareResult;
@@ -46,13 +46,13 @@ namespace Part_2
              Email.Equals(person.Email) && Gender == person.Gender;
         public override int GetHashCode()
         {
-            int compareResult = 13;
-            compareResult = compareResult * 13 + Id.GetHashCode();
-            compareResult = compareResult * 13 + FirstName?.GetHashCode() ?? 0;
-            compareResult = compareResult * 13 + LastName?.GetHashCode() ?? 0;
-            compareResult = compareResult * 13 + Email?.GetHashCode() ?? 0;
-            compareResult = compareResult * 13 + Gender.GetHashCode();
-            return compareResult;
+            int hashCode = 13;
+            hashCode = hashCode * 13 + Id.GetHashCode();
+            hashCode = hashCode * 13 + FirstName?.GetHashCode() ?? 0;
+            hashCode = hashCode * 13 + LastName?.GetHashCode() ?? 0;
+            hashCode = hashCode * 13 + Email?.GetHashCode() ?? 0;
+            hashCode = hashCode * 13 + Gender.GetHashCode();
+            return hashCode;
         }
 
     }
