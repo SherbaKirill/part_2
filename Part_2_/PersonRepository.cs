@@ -2,7 +2,6 @@
 
 namespace Part_2
 {
-    // Implement without LINQ
     public class PersonRepository
     {
         private IPerson[] _persons;
@@ -12,64 +11,67 @@ namespace Part_2
             _persons = persons;
         }
 
-        // TODO: return count of mans
         public int ManCount
         {
-            get { throw new NotImplementedException(); }
+            get { return Array.FindAll(_persons, x => x.Gender == Gender.M).Length; }
         }
 
-        // TODO: return count of womans
         public int WomanCount
         {
-            get { throw new NotImplementedException(); }
+            get { return Array.FindAll( _persons, x => x.Gender == Gender.W).Length; }
         }
 
         public IPerson[] Get()
         {
-            // TODO: return all persons
-            throw new NotImplementedException();
+            return _persons;
         }
 
         public IPerson Get(long id)
         {
-            // TODO: find person by Id
-            throw new NotImplementedException();
+            return Array.Find(_persons, x => x.Id == id);
         }
 
         public IPerson[] GetOrderedPersons()
         {
-            // TODO: reuse Sorting class and return ordered Persons
-            throw new NotImplementedException();
+            return Sorting.Order(_persons);
         }
 
         public IPerson[] GetDescendingOrderedPersons()
         {
-            // TODO: reuse Sorting class and return descending ordered Persons
-            throw new NotImplementedException();
+            return Sorting.DescendingOrder(_persons);
         }
 
         public string[] GetUniquePersonEmails()
         {
-            // TODO: get person emails and return list of Unique Emails
-            throw new NotImplementedException();
+            string[] listEmails = new string[_persons.Length];
+            for (int elem = 0; elem < _persons.Length; elem++)
+                listEmails[elem] = _persons[elem].Email;
+            return Sorting.Unique(listEmails);
         }
 
         public IPerson Add(IPerson person)
         {
-            // TODO: add new Person
-            throw new NotImplementedException();
+            Array.Resize(ref _persons, _persons.Length + 1);
+            _persons[_persons.Length - 1] = person;
+            return Get(person.Id);
         }
 
         public IPerson Edit(IPerson person)
         {
-            // TODO: edit person
-            throw new NotImplementedException();
+                _persons[Array.IndexOf(_persons, Get(person.Id))] = person;
+                return Get(person.Id);
         }
 
         public IPerson Delete(long id)
         {
-            // TODO: delete person
-            throw new NotImplementedException();
+            IPerson[] personsAfterDel = new IPerson[_persons.Length - 1];
+            int index = Array.IndexOf(_persons, Get(id));
+            IPerson deletedPerson = _persons[index];
+            Array.Copy(_persons, 0, personsAfterDel, 0, index);
+            Array.Copy(_persons, index + 1, personsAfterDel, index, _persons.Length - index-1);
+            _persons = personsAfterDel;
+            return deletedPerson;
+            
         }
     }
 }
