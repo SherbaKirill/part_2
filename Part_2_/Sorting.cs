@@ -7,6 +7,7 @@ namespace Part_2
         public static T[] Order<T>(T[] collection)
             where T : IComparable<T>, IComparable
         {
+
             Array.Sort(collection);
             return collection;
         }
@@ -21,11 +22,13 @@ namespace Part_2
 
         public static T[] Unique<T>(T[] collection)
         {
+>
             T[] result = new T[0];
             foreach (T element in collection)
                 if (Array.IndexOf(result, element) == -1)
                 {
                     Array.Resize(ref result, result.Length + 1);
+
                     result.SetValue(element, result.Length - 1);
                 }
             return result;
